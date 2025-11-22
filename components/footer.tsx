@@ -31,7 +31,7 @@ export default function Footer() {
               <span className="font-black text-lg">Melamina Chamorro</span>
             </Link>
             <p className="text-background/75 text-sm leading-relaxed">
-              Especialistas en muebles de melamina personalizados. Transformando espacios desde hace 15+ años.
+              Especialistas en muebles de melamina personalizados para hogares y espacios corporativos. Transformando espacios desde hace 15+ años.
             </p>
           </div>
 

@@ -10,7 +10,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Melamina Chamorro | Diseño, Fabricación e Instalación de Muebles",
   description:
-    "Especialistas en muebles de melamina, diseño personalizado, fabricación e instalación para cocinas, habitaciones y departamentos.",
+    "Especialistas en muebles de melamina, diseño personalizado, fabricación e instalación para cocinas, habitaciones, departamentos y espacios corporativos.",
   generator: "v0.app",
 }
 

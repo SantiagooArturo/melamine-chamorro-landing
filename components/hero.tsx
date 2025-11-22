@@ -24,7 +24,7 @@ export default function Hero() {
                 Rediseña <span className="text-foreground">tus espacios</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
-                Muebles personalizados de melamina para cocinas, habitaciones y departamentos. Diseño, fabricación e
+                Muebles personalizados de melamina para cocinas, habitaciones, departamentos y espacios corporativos. Diseño, fabricación e
                 instalación de calidad internacional.
               </p>
             </div>
