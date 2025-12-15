@@ -14,13 +14,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { Share2, CheckCircle2, Loader2, Sparkles } from "lucide-react";
+import { CheckCircle2, Loader2, Sparkles } from "lucide-react";
 
 export default function RaffleModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [hasShared, setHasShared] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
@@ -38,41 +37,8 @@ export default function RaffleModal() {
     }
   }, []);
 
-  const handleShare = async () => {
-    const shareData = {
-      title: "Melamina Chamorro - Sorteo Especial",
-      text: "¡Participa en el sorteo de Melamina Chamorro! Diseño y fabricación de muebles de alta calidad. 🎁✨",
-      url: window.location.href,
-    };
-
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-        setHasShared(true);
-      } else {
-        // Fallback: copiar al portapapeles
-        await navigator.clipboard.writeText(
-          `${shareData.text} ${shareData.url}`
-        );
-        setHasShared(true);
-        alert("¡Enlace copiado! Compártelo con tus amigos por WhatsApp o redes sociales.");
-      }
-    } catch (error) {
-      // El usuario canceló el compartir, pero aún así lo marcamos como compartido
-      // para permitir la participación
-      if ((error as Error).name !== "AbortError") {
-        console.error("Error al compartir:", error);
-      }
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!hasShared) {
-      alert("¡Debes compartir con un amigo para participar!");
-      return;
-    }
 
     if (!formData.fullName.trim() || !formData.phoneNumber.trim()) {
       alert("Por favor completa todos los campos");
@@ -85,7 +51,6 @@ export default function RaffleModal() {
       await addDoc(collection(db, "raffle-participants"), {
         fullName: formData.fullName.trim(),
         phoneNumber: formData.phoneNumber.trim(),
-        sharedAt: serverTimestamp(),
         createdAt: serverTimestamp(),
       });
 
@@ -172,37 +137,9 @@ export default function RaffleModal() {
                 />
               </div>
 
-              <div className="pt-2">
-                <Button
-                  type="button"
-                  onClick={handleShare}
-                  variant={hasShared ? "outline" : "default"}
-                  className={`w-full ${
-                    hasShared
-                      ? "bg-green-100 border-green-500 text-green-700 hover:bg-green-200"
-                      : "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white"
-                  }`}
-                >
-                  {hasShared ? (
-                    <>
-                      <CheckCircle2 className="w-4 h-4 mr-2" />
-                      ¡Compartido!
-                    </>
-                  ) : (
-                    <>
-                      <Share2 className="w-4 h-4 mr-2" />
-                      Compartir con un amigo
-                    </>
-                  )}
-                </Button>
-                <p className="text-xs text-amber-600 mt-1 text-center">
-                  Debes compartir para poder participar
-                </p>
-              </div>
-
               <Button
                 type="submit"
-                disabled={isSubmitting || !hasShared}
+                disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold py-3 text-lg shadow-md disabled:opacity-50"
               >
                 {isSubmitting ? (
@@ -233,4 +170,3 @@ export default function RaffleModal() {
     </Dialog>
   );
 }
-
