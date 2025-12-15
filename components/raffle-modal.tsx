@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { Gift, Share2, CheckCircle2, Loader2, Sparkles } from "lucide-react";
+import { Share2, CheckCircle2, Loader2, Sparkles } from "lucide-react";
 
 export default function RaffleModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,8 +110,22 @@ export default function RaffleModal() {
         {!isSuccess ? (
           <>
             <DialogHeader className="text-center">
-              <div className="mx-auto mb-4 w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
-                <Gift className="w-8 h-8 text-white" />
+              {/* Logos de las empresas */}
+              <div className="flex items-center justify-center gap-6 mb-4">
+                <Image
+                  src="/logo.png"
+                  alt="Melamina Chamorro"
+                  width={150}
+                  height={80}
+                  className="h-20 w-auto object-contain"
+                />
+                <Image
+                  src="/kitchencenter_logo.webp"
+                  alt="Kitchen Center"
+                  width={150}
+                  height={80}
+                  className="h-20 w-auto object-contain"
+                />
               </div>
               <DialogTitle className="text-2xl font-bold text-amber-900 flex items-center justify-center gap-2">
                 <Sparkles className="w-5 h-5 text-amber-500" />
@@ -118,7 +133,7 @@ export default function RaffleModal() {
                 <Sparkles className="w-5 h-5 text-amber-500" />
               </DialogTitle>
               <DialogDescription className="text-amber-700 text-base mt-2">
-                Participa en nuestro sorteo exclusivo. Completa tus datos, comparte con un amigo y podrás ganar increíbles premios.
+                Participa en nuestro sorteo exclusivo solo para nuestros clientes, como una manera de agradecerles por permitirnos ser parte de sus hogares y proyectos.
               </DialogDescription>
             </DialogHeader>
 
